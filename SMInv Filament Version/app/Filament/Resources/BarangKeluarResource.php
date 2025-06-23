@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BarangKeluarResource\Pages;
-use App\Filament\Resources\BarangKeluarResource\RelationManagers;
-use App\Models\BarangKeluar;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\BarangKeluar;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\BarangKeluarResource\Pages;
+use App\Filament\Resources\BarangKeluarResource\RelationManagers;
 
 class BarangKeluarResource extends Resource
 {
@@ -23,7 +27,9 @@ class BarangKeluarResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Select::make('barang_id')->relationship('barang','nama')->searchable(['nama'])->preload()->required(),
+                TextInput::make('total')->numeric()->required(),
+                DatePicker::make('tanggal')->default(now())
             ]);
     }
 
@@ -31,7 +37,10 @@ class BarangKeluarResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('barang.nama')->label('Nama Barang'),
+                TextColumn::make('total')->label('Jumlah'),
+                TextColumn::make('tanggal'),
+                TextColumn::make('user.name')->label('Admin')
             ])
             ->filters([
                 //
