@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+     public function bMasuk()
+    {
+        return $this->hasMany(BarangMasuk::class);
+    }
+    public function bKeluar()
+    {
+        return $this->hasMany(BarangKeluar::class);
+    }
 }
